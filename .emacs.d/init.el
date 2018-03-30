@@ -143,14 +143,8 @@
 ;; recentf-ext
 ;;(require 'recentf-ext)
 
-;; anything
-(require 'anything-startup)
-(define-key global-map (kbd "C-x C-b") 'anything-for-files)
-(define-key global-map (kbd "M-y") 'anything-show-kill-ring)
-(setq kill-ring-max 100)
-
-;; anything-replace-string
-;;(require 'anything-replace-string)
+;; Helm
+(require 'helm-config)
 
 ;; groovy-mode
 (autoload 'groovy-mode "groovy-mode" "Groovy editing mode." t)
@@ -196,4 +190,4 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (yaml-mode scala-mode2 recentf-ext markdown-mode js2-mode groovy-mode fringe-helper ensime dockerfile-mode auto-complete anything-replace-string))))
+    (helm yaml-mode scala-mode2 recentf-ext markdown-mode js2-mode groovy-mode fringe-helper ensime dockerfile-mode auto-complete anything-replace-string))))
