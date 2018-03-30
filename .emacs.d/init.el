@@ -145,6 +145,8 @@
 
 ;; Helm
 (require 'helm-config)
+(define-key global-map (kbd "C-x C-b") 'helm-for-files)
+(define-key global-map (kbd "C-y") 'helm-show-kill-ring)
 
 ;; groovy-mode
 (autoload 'groovy-mode "groovy-mode" "Groovy editing mode." t)
