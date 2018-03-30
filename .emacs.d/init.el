@@ -154,8 +154,8 @@
 (add-to-list 'auto-mode-alist '("\.gradle$" . groovy-mode))
 (add-to-list 'interpreter-mode-alist '("groovy" . groovy-mode))
 
-;; scala-mode2
-(require 'scala-mode2)
+;; scala-mode
+(require 'scala-mode)
 (add-to-list 'auto-mode-alist '("\.sbt$" . scala-mode))
 
 ;; ensime
@@ -192,4 +192,4 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (helm yaml-mode scala-mode2 recentf-ext markdown-mode js2-mode groovy-mode fringe-helper ensime dockerfile-mode auto-complete anything-replace-string))))
+    (helm yaml-mode recentf-ext markdown-mode js2-mode groovy-mode fringe-helper ensime dockerfile-mode auto-complete anything-replace-string))))
