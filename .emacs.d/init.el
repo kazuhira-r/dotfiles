@@ -1,6 +1,9 @@
 ;;
 ;; init.el
 ;;
+(setq proxy-config-file (locate-user-emacs-file "~/.emacs.d/proxy.el"))
+(if (file-exists-p proxy-config-file)
+    (load proxy-config-file))
 
 ;; Language.
 (set-language-environment 'Japanese)
@@ -146,7 +149,7 @@
 ;; Helm
 (require 'helm-config)
 (define-key global-map (kbd "C-x C-b") 'helm-for-files)
-(define-key global-map (kbd "C-y") 'helm-show-kill-ring)
+(define-key global-map (kbd "M-y") 'helm-show-kill-ring)
 
 ;; groovy-mode
 (autoload 'groovy-mode "groovy-mode" "Groovy editing mode." t)
