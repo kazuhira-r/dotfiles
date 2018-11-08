@@ -54,5 +54,10 @@
         "key": "pagedown",
         "command": "-emacs.cursorPageDown",
         "when": "editorTextFocus && !suggestWidgetVisible"
+    },
+    {
+        "key": "ctrl+c",
+        "command": "-keybindings.editor.copyKeybindingEntry",
+        "when": "inKeybindings && keybindingFocus"
     }
 ]
