@@ -18,9 +18,9 @@
 ;; Package Manegement
 (require 'package)
 (add-to-list 'package-archives '("melpa" .
-                                 "http://melpa.milkbox.net/packages/") t)
+                                 "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("marmalade" .
-                                 "http://marmalade-repo.org/packages/"))
+                                 "https://marmalade-repo.org/packages/"))
 (package-initialize)
 
 (when (not package-archive-contents)
