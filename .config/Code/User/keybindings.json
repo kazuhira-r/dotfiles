@@ -59,5 +59,9 @@
         "key": "ctrl+c",
         "command": "-keybindings.editor.copyKeybindingEntry",
         "when": "inKeybindings && keybindingFocus"
+    },
+    {
+        "key": "ctrl+x ctrl+f",
+        "command": "workbench.action.openWorkspace"
     }
 ]

@@ -197,4 +197,4 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (helm yaml-mode recentf-ext markdown-mode js2-mode groovy-mode fringe-helper ensime dockerfile-mode auto-complete anything-replace-string))))
+    (lua-mode go-mode terraform-mode helm yaml-mode recentf-ext markdown-mode js2-mode groovy-mode fringe-helper ensime dockerfile-mode auto-complete anything-replace-string))))
