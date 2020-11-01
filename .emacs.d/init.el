@@ -136,6 +136,9 @@
 (cua-mode t)  ; cua-modeをオン
 (setq cua-enable-cua-keys nil)  ; CUAキーバインドを無効化
 
+;; dired
+(put 'dired-find-alternate-file 'disabled nil)
+
 ;; 手動で導入したelispのインストールディレクトリ
 (defconst my-elisp-directory "~/.emacs.d/elisp/" "The directory for myelisp file.")
 (dolist (dir (let ((dir (expand-file-name my-elisp-directory)))
