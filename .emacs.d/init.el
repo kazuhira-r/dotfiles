@@ -153,6 +153,32 @@
 (define-key global-map (kbd "C-x C-b") 'helm-for-files)
 (define-key global-map (kbd "M-y") 'helm-show-kill-ring)
 
+;; lsp-mode
+(require 'lsp-mode)
+(setq gc-cons-threshold 100000000)
+(setq read-process-output-max (* 1024 1024))
+(setq lsp-completion-provider :capf)
+(setq lsp-idle-delay 0.500)
+(require 'lsp-ui)
+(setq lsp-ui-imenu-enable t)
+(setq lsp-headerline-breadcrumb-enable t)
+
+;; python
+(require 'lsp-python-ms)
+(setq lsp-python-ms-auto-install-server t)
+(add-hook 'python-mode-hook #'lsp)
+
+;; company
+(require 'company)
+(global-company-mode t)
+(setq company-idle-delay 0)
+(setq company-minimum-prefix-length 2)
+(setq company-selection-wrap-around t)
+(setq completion-ignore-case t)
+(define-key company-active-map (kbd "C-n") 'company-select-next)
+(define-key company-active-map (kbd "C-p") 'company-select-previous)
+(define-key company-active-map (kbd "C-s") 'company-filter-candidates)
+
 ;; groovy-mode
 (autoload 'groovy-mode "groovy-mode" "Groovy editing mode." t)
 (add-to-list 'auto-mode-alist '("\.groovy$" . groovy-mode))
@@ -163,19 +189,15 @@
 (require 'scala-mode)
 (add-to-list 'auto-mode-alist '("\.sbt$" . scala-mode))
 
-;; ensime
-(require 'ensime)
-(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
-
 ; yasnippet
 (require 'yasnippet)
 (yas/global-mode 1)
 
 ;; auto-complete
-(require 'auto-complete)
-(global-auto-complete-mode t)
-(define-key ac-complete-mode-map "\C-n" 'ac-next)
-(define-key ac-complete-mode-map "\C-p" 'ac-previous)
+;;(require 'auto-complete)
+;;(global-auto-complete-mode t)
+;;(define-key ac-complete-mode-map "\C-n" 'ac-next)
+;;(define-key ac-complete-mode-map "\C-p" 'ac-previous)
 
 ;;;; auto-java-complete
 ;;(require 'ajc-java-complete-config)
@@ -189,12 +211,7 @@
 (require 'js2-mode)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
-(put 'dired-find-alternate-file 'disabled nil)
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages
-   (quote
-    (lua-mode go-mode terraform-mode helm yaml-mode recentf-ext markdown-mode js2-mode groovy-mode fringe-helper ensime dockerfile-mode auto-complete anything-replace-string))))
+;; custom
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+(when (file-exists-p custom-file)
+  (load custom-file))
