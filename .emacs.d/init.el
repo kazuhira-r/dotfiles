@@ -167,8 +167,7 @@
 (setq lsp-headerline-breadcrumb-enable t)
 
 ;; python
-(require 'lsp-python-ms)
-(setq lsp-python-ms-auto-install-server t)
+(require 'lsp-pyright)
 (add-hook 'python-mode-hook #'lsp)
 
 ;; company
