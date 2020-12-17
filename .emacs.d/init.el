@@ -166,10 +166,6 @@
 (setq lsp-ui-imenu-enable t)
 (setq lsp-headerline-breadcrumb-enable t)
 
-;; python
-(require 'lsp-pyright)
-(add-hook 'python-mode-hook #'lsp)
-
 ;; company
 (require 'company)
 (global-company-mode t)
@@ -180,6 +176,20 @@
 (define-key company-active-map (kbd "C-n") 'company-select-next)
 (define-key company-active-map (kbd "C-p") 'company-select-previous)
 (define-key company-active-map (kbd "C-s") 'company-filter-candidates)
+
+;; go
+(use-package lsp-mode
+  :ensure t
+  :commands (lsp lsp-deferred)
+  :hook (go-mode . lsp-deferred))
+;(require 'company-go)
+;(add-hook 'go-mode-hook (lambda ()
+;                          (set (make-local-variable 'company-backends) '(company-go))
+;                          (company-mode)))
+
+;; python
+(require 'lsp-pyright)
+(add-hook 'python-mode-hook #'lsp)
 
 ;; groovy-mode
 (autoload 'groovy-mode "groovy-mode" "Groovy editing mode." t)
