@@ -188,8 +188,8 @@
 ;                          (company-mode)))
 
 ;; python
-(require 'lsp-pyright)
-(add-hook 'python-mode-hook #'lsp)
+;(require 'lsp-pyright)
+;(add-hook 'python-mode-hook #'lsp)
 
 ;; groovy-mode
 (autoload 'groovy-mode "groovy-mode" "Groovy editing mode." t)
