@@ -223,6 +223,10 @@
 (require 'js2-mode)
 (add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
 
+;; csharp-mode
+(require 'lsp-mode)
+(add-hook 'csharp-mode-hook #'lsp)
+
 ;; custom
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file)
