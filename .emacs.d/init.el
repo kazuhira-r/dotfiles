@@ -177,6 +177,20 @@
 (define-key company-active-map (kbd "C-p") 'company-select-previous)
 (define-key company-active-map (kbd "C-s") 'company-filter-candidates)
 
+;; typescript
+(require 'typescript-mode)
+(add-hook 'typescript-mode-hook '(lambda () (setq typescript-indent-level 2)))
+(add-to-list 'auto-mode-alist '("\.ts$" . typescript-mode))
+(require 'ansi-color)
+(defun colorize-compilation-buffer ()
+  (ansi-color-apply-on-region compilation-filter-start (point-max)))
+(add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
+
+(use-package lsp-mode
+  :ensure t
+  :commands (lsp lsp-deferred)
+  :hook (typescript-mode . lsp-deferred))
+
 ;; go
 (use-package lsp-mode
   :ensure t
