@@ -205,7 +205,8 @@
 ;; (require 'js2-mode)
 ;; (add-to-list 'auto-mode-alist '("\\.(js|json)$" . js2-mode))
 ;; (add-hook 'js2-mode-hook '(lambda () (setq js-indent-level 2)))
-(add-hook 'js-mode-hook '(lambda () (setq js-indent-level 2)))(use-package lsp-mode
+(add-hook 'js-mode-hook '(lambda () (setq js-indent-level 2)))
+(use-package lsp-mode
   :ensure t
   :commands (lsp lsp-deferred)
   :hook (js-mode . lsp-deferred))
