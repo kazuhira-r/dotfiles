@@ -199,7 +199,16 @@
 ;(require 'company-go)
 ;(add-hook 'go-mode-hook (lambda ()
 ;                          (set (make-local-variable 'company-backends) '(company-go))
-;                          (company-mode)))
+                                        ;                          (company-mode)))
+
+;; javascript
+;; (require 'js2-mode)
+;; (add-to-list 'auto-mode-alist '("\\.(js|json)$" . js2-mode))
+;; (add-hook 'js2-mode-hook '(lambda () (setq js-indent-level 2)))
+(add-hook 'js-mode-hook '(lambda () (setq js-indent-level 2)))(use-package lsp-mode
+  :ensure t
+  :commands (lsp lsp-deferred)
+  :hook (js-mode . lsp-deferred))
 
 ;; python
 ;(require 'lsp-pyright)
@@ -232,12 +241,6 @@
 ;; dockerfile-mode
 (require 'dockerfile-mode)
 (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
-
-;; js2-mode
-;; (require 'js2-mode)
-;; (add-to-list 'auto-mode-alist '("\\.(js|json)$" . js2-mode))
-;; (add-hook 'js2-mode-hook '(lambda () (setq js-indent-level 2)))
-(add-hook 'js-mode-hook '(lambda () (setq js-indent-level 2)))
 
 ;; csharp-mode
 (require 'lsp-mode)
