@@ -234,8 +234,10 @@
 (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
 
 ;; js2-mode
-(require 'js2-mode)
-(add-to-list 'auto-mode-alist '("\\.js$" . js2-mode))
+;; (require 'js2-mode)
+;; (add-to-list 'auto-mode-alist '("\\.(js|json)$" . js2-mode))
+;; (add-hook 'js2-mode-hook '(lambda () (setq js-indent-level 2)))
+(add-hook 'js-mode-hook '(lambda () (setq js-indent-level 2)))
 
 ;; csharp-mode
 (require 'lsp-mode)
