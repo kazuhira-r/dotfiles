@@ -1,6 +1,8 @@
 ;;
 ;; init.el
 ;;
+
+;; proxy-settings if exists
 (setq proxy-config-file (locate-user-emacs-file "~/.emacs.d/proxy.el"))
 (if (file-exists-p proxy-config-file)
     (load proxy-config-file))
@@ -247,7 +249,12 @@
 (require 'lsp-mode)
 (add-hook 'csharp-mode-hook #'lsp)
 
-;; custom
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
+;; custom settings
+(setq custom-config-file (locate-user-emacs-file "~/.emacs.d/custom-config.el"))
+(if (file-exists-p custom-config-file)
+    (load custom-config-file))
+
+;; installed-packages-file
+(setq custom-file (expand-file-name "installed-packages.el" user-emacs-directory))
 (when (file-exists-p custom-file)
   (load custom-file))
