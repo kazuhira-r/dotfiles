@@ -154,7 +154,7 @@
 ;;(require 'recentf-ext)
 
 ;; Helm
-(require 'helm-config)
+(require 'helm)
 (define-key global-map (kbd "C-x C-b") 'helm-for-files)
 (define-key global-map (kbd "M-y") 'helm-show-kill-ring)
 
