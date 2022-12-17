@@ -179,6 +179,11 @@
 (define-key company-active-map (kbd "C-p") 'company-select-previous)
 (define-key company-active-map (kbd "C-s") 'company-filter-candidates)
 
+;; flycheck
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+
 ;; typescript
 (require 'typescript-mode)
 (add-hook 'typescript-mode-hook '(lambda () (setq typescript-indent-level 2)))
