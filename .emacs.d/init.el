@@ -174,14 +174,17 @@
 
 ;; company
 (use-package company)
-(global-company-mode t)
-(setq company-idle-delay 0)
-(setq company-minimum-prefix-length 1)
-(setq company-selection-wrap-around t)
-(setq completion-ignore-case t)
-(define-key company-active-map (kbd "C-n") 'company-select-next)
-(define-key company-active-map (kbd "C-p") 'company-select-previous)
-(define-key company-active-map (kbd "C-s") 'company-filter-candidates)
+(add-hook 'after-init-hook 'global-company-mode)
+(with-eval-after-load 'company
+  (setq company-idle-delay 0)
+  (setq company-auto-expand t)
+  (setq company-minimum-prefix-length 2)
+  (setq company-selection-wrap-around t)
+  (setq completion-ignore-case t)
+  (global-set-key (kbd "C-c <insert>") 'company-complete)
+  (define-key company-active-map (kbd "C-n") 'company-select-next)
+  (define-key company-active-map (kbd "C-p") 'company-select-previous)
+  (define-key company-active-map (kbd "C-s") 'company-filter-candidates))
 
 ;; flycheck
 (use-package flycheck
