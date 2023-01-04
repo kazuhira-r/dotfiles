@@ -159,17 +159,21 @@
 (define-key global-map (kbd "M-y") 'helm-show-kill-ring)
 
 ;; lsp-mode
-(require 'lsp-mode)
+(use-package lsp-mode
+  :init
+  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
+  (setq lsp-keymap-prefix "C-c l")
+  :commands lsp)
 (setq gc-cons-threshold 100000000)
 (setq read-process-output-max (* 1024 1024))
 (setq lsp-completion-provider :capf)
 (setq lsp-idle-delay 0.500)
-(require 'lsp-ui)
+(use-package lsp-ui :commands lsp-ui-mode)
 (setq lsp-ui-imenu-enable t)
 (setq lsp-headerline-breadcrumb-enable t)
 
 ;; company
-(require 'company)
+(use-package company)
 (global-company-mode t)
 (setq company-idle-delay 0)
 (setq company-minimum-prefix-length 1)
@@ -185,7 +189,7 @@
   :init (global-flycheck-mode))
 
 ;; typescript
-(require 'typescript-mode)
+(use-package typescript-mode)
 (add-hook 'typescript-mode-hook '(lambda () (setq typescript-indent-level 2)))
 (add-to-list 'auto-mode-alist '("\.ts$" . typescript-mode))
 (require 'ansi-color)
@@ -203,10 +207,6 @@
   :ensure t
   :commands (lsp lsp-deferred)
   :hook (go-mode . lsp-deferred))
-;(require 'company-go)
-;(add-hook 'go-mode-hook (lambda ()
-;                          (set (make-local-variable 'company-backends) '(company-go))
-                                        ;                          (company-mode)))
 
 ;; javascript
 ;; (require 'js2-mode)
@@ -219,7 +219,7 @@
   :hook (js-mode . lsp-deferred))
 
 ;; python
-;(require 'lsp-pyright)
+;(use-package lsp-pyright)
 ;(add-hook 'python-mode-hook #'lsp)
 
 ;; groovy-mode
@@ -228,30 +228,15 @@
 (add-to-list 'auto-mode-alist '("\.gradle$" . groovy-mode))
 (add-to-list 'interpreter-mode-alist '("groovy" . groovy-mode))
 
-;; scala-mode
-(require 'scala-mode)
-(add-to-list 'auto-mode-alist '("\.sbt$" . scala-mode))
-
 ; yasnippet
-(require 'yasnippet)
+(use-package yasnippet)
 (yas/global-mode 1)
 
-;; auto-complete
-;;(require 'auto-complete)
-;;(global-auto-complete-mode t)
-;;(define-key ac-complete-mode-map "\C-n" 'ac-next)
-;;(define-key ac-complete-mode-map "\C-p" 'ac-previous)
-
-;;;; auto-java-complete
-;;(require 'ajc-java-complete-config)
-;;(add-hook 'java-mode-hook 'ajc-java-complete-mode)
-
 ;; dockerfile-mode
-(require 'dockerfile-mode)
+(use-package dockerfile-mode)
 (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
 
 ;; csharp-mode
-(require 'lsp-mode)
 (add-hook 'csharp-mode-hook #'lsp)
 
 ;; custom settings
