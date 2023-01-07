@@ -194,7 +194,7 @@
 ;; typescript
 (use-package typescript-mode)
 (add-hook 'typescript-mode-hook '(lambda () (setq typescript-indent-level 2)))
-(add-to-list 'auto-mode-alist '("\.ts$" . typescript-mode))
+(add-to-list 'auto-mode-alist '("\.tsx?$" . typescript-mode))
 (require 'ansi-color)
 (defun colorize-compilation-buffer ()
   (ansi-color-apply-on-region compilation-filter-start (point-max)))
@@ -212,9 +212,7 @@
   :hook (go-mode . lsp-deferred))
 
 ;; javascript
-;; (require 'js2-mode)
-;; (add-to-list 'auto-mode-alist '("\\.(js|json)$" . js2-mode))
-;; (add-hook 'js2-mode-hook '(lambda () (setq js-indent-level 2)))
+(add-to-list 'auto-mode-alist '("\.jsx?$" . js-mode))
 (add-hook 'js-mode-hook '(lambda () (setq js-indent-level 2)))
 (use-package lsp-mode
   :ensure t
