@@ -178,7 +178,7 @@
 (with-eval-after-load 'company
   (setq company-idle-delay 0)
   (setq company-auto-expand t)
-  (setq company-minimum-prefix-length 2)
+  (setq company-minimum-prefix-length 1)
   (setq company-selection-wrap-around t)
   (setq completion-ignore-case t)
   (global-set-key (kbd "C-c <insert>") 'company-complete)
@@ -220,8 +220,8 @@
   :hook (js-mode . lsp-deferred))
 
 ;; python
-;(use-package lsp-pyright)
-;(add-hook 'python-mode-hook #'lsp)
+(use-package lsp-pyright)
+(add-hook 'python-mode-hook #'lsp)
 
 ;; groovy-mode
 (autoload 'groovy-mode "groovy-mode" "Groovy editing mode." t)
