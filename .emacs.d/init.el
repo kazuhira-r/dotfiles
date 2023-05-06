@@ -172,6 +172,20 @@
 (setq lsp-ui-imenu-enable t)
 (setq lsp-headerline-breadcrumb-enable t)
 
+;; https://github.com/typescript-language-server/typescript-language-server/issues/559
+;; same definition as mentioned earlier
+(advice-add 'json-parse-string :around
+            (lambda (orig string &rest rest)
+              (apply orig (s-replace "\\u0000" "" string)
+                     rest)))
+;; minor changes: saves excursion and uses search-forward instead of re-search-forward
+(advice-add 'json-parse-buffer :around
+            (lambda (oldfn &rest args)
+	      (save-excursion 
+                (while (search-forward "\\u0000" nil t)
+                  (replace-match "" nil t)))
+		(apply oldfn args)))
+
 ;; company
 (use-package company)
 (add-hook 'after-init-hook 'global-company-mode)
