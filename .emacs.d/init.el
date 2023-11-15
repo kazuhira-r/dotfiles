@@ -158,6 +158,11 @@
 (define-key global-map (kbd "C-x C-b") 'helm-for-files)
 (define-key global-map (kbd "M-y") 'helm-show-kill-ring)
 
+;; magit
+(define-key global-map (kbd "C-x g") 'magit-status)
+(define-key global-map (kbd "C-c g") 'magit-dispatch)
+(define-key global-map (kbd "C-c f") 'magit-file-dispatch)
+
 ;; lsp-mode
 (use-package lsp-mode
   :init
