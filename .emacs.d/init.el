@@ -224,10 +224,6 @@
   :commands (lsp lsp-deferred)
   :hook (typescript-mode . lsp-deferred))
 
-;; java
-(use-package lsp-java)
-(add-hook 'java-mode-hook #'lsp)
-
 ;; go
 (use-package lsp-mode
   :ensure t
