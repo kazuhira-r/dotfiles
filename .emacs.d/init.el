@@ -225,7 +225,12 @@
   :hook (typescript-mode . lsp-deferred))
 
 ;; terraform
+(use-package terraform-mode)
 (add-to-list 'auto-mode-alist '("\.tf$" . terraform-mode))
+(use-package lsp-mode
+  :ensure t
+  :commands (lsp lsp-deferred)
+  :hook (terraform-mode . lsp-deferred))
 
 ;; go
 (use-package lsp-mode
