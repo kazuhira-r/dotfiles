@@ -186,7 +186,7 @@
 ;; minor changes: saves excursion and uses search-forward instead of re-search-forward
 (advice-add 'json-parse-buffer :around
             (lambda (oldfn &rest args)
-	      (save-excursion 
+	      (save-excursion
                 (while (search-forward "\\u0000" nil t)
                   (replace-match "" nil t)))
 		(apply oldfn args)))
@@ -225,7 +225,6 @@
   :hook (typescript-mode . lsp-deferred))
 
 ;; terraform
-(use-package terraform-mode)
 (add-to-list 'auto-mode-alist '("\.tf$" . terraform-mode))
 (use-package lsp-mode
   :ensure t
@@ -247,8 +246,10 @@
   :hook (js-mode . lsp-deferred))
 
 ;; python
-(use-package lsp-pyright)
-(add-hook 'python-mode-hook #'lsp)
+(use-package lsp-mode
+  :ensure t
+  :commands (lsp lsp-deferred)
+  :hook (python-mode . lsp-deferred))
 
 ;; groovy-mode
 (autoload 'groovy-mode "groovy-mode" "Groovy editing mode." t)
@@ -258,7 +259,7 @@
 
 ; yasnippet
 (use-package yasnippet)
-(yas/global-mode 1)
+(yas-global-mode 1)
 
 ;; dockerfile-mode
 (use-package dockerfile-mode)
