@@ -238,6 +238,12 @@
   :commands (lsp lsp-deferred)
   :hook (go-mode . lsp-deferred))
 
+;; rust
+(use-package lsp-mode
+  :ensure t
+  :commands (lsp lsp-deferred)
+  :hook (rust-mode . lsp-deferred))
+
 ;; javascript
 (add-to-list 'auto-mode-alist '("\.[cm]?jsx?$" . js-mode))
 (add-hook 'js-mode-hook '(lambda () (setq js-indent-level 2)))
