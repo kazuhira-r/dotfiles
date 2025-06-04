@@ -211,6 +211,15 @@
   :ensure t
   :init (global-flycheck-mode))
 
+;; GitHub Copilot
+(use-package copilot)
+(add-hook 'prog-mode-hook 'copilot-mode)
+(define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
+(define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
+
+;; GitHub Copilot Chat
+(use-package copilot-chat)
+
 ;; typescript
 (use-package typescript-mode)
 (add-hook 'typescript-mode-hook '(lambda () (setq typescript-indent-level 2)))
