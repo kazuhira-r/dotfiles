@@ -234,6 +234,16 @@
   :commands (lsp lsp-deferred)
   :hook (typescript-mode . lsp-deferred))
 
+;; bash
+(add-to-list 'auto-mode-alist '("\.(ba)?sh$" . sh-mode))
+;;; Bats
+;;; typescript-modeのadd-to-listと競合するので、typescript-modeの定義よりも後ろに置く
+(add-to-list 'auto-mode-alist '("\.bats$" . sh-mode))
+(use-package lsp-mode
+  :ensure t
+  :commands (lsp lsp-deferred)
+  :hook (sh-mode . lsp-deferred))
+
 ;; terraform
 (add-to-list 'auto-mode-alist '("\.tf$" . terraform-mode))
 (use-package lsp-mode
