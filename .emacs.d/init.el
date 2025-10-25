@@ -151,6 +151,9 @@
 ;; recentf-ext
 ;;(require 'recentf-ext)
 
+;; ネイティブコンパイルの警告を非表示にする
+(setq native-comp-async-report-warnings-errors nil)
+
 ;; Helm
 (require 'helm)
 (define-key global-map (kbd "C-x C-b") 'helm-for-files)
