@@ -2,22 +2,22 @@
 ;; init.el
 ;;
 
-;; proxy-settings if exists
+;; proxy.elというファイルがあれば読み込む
 (setq proxy-config-file (locate-user-emacs-file "~/.emacs.d/proxy.el"))
 (if (file-exists-p proxy-config-file)
     (load proxy-config-file))
 
-;; Language.
+;; 言語
 (set-language-environment 'Japanese)
 
-;; Coding system.
+;; encoding
 (set-default-coding-systems 'utf-8)
 (set-keyboard-coding-system 'utf-8)
 (set-terminal-coding-system 'utf-8)
 (set-buffer-file-coding-system 'utf-8)
 (prefer-coding-system 'utf-8)
 
-;; Package Manegement
+;; パッケージ管理
 (require 'package)
 (add-to-list 'package-archives '("melpa" .
                                  "https://melpa.org/packages/") t)
@@ -33,7 +33,7 @@
 ;; (electric-pair-mode t)
 (global-font-lock-mode t)
 
-;; Ignore case
+;; ファイル名を含む補完時に大文字・小文字を無視
 (setq completion-ignore-case t)
 (setq read-file-name-completion-ignore-case t)
 
@@ -92,7 +92,7 @@
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'post-forward-angle-brackets)
 
-;; .#* とかのバックアップファイルを作らない
+;; .#* のようなバックアップファイルを作らない
 (setq auto-save-default nil)
 
 ;;; バックアップファイルを作らない
@@ -101,11 +101,11 @@
 ;;; 終了時にオートセーブファイルを消す
 (setq delete-auto-save-files t)
 
-;; 変更されたファイルの自動再読み込み
+;; 変更されたファイルを自動で再読み込みする
 (global-auto-revert-mode 1)
 
 (set-face-attribute 'default nil
-                    :family "MS ゴシック"
+;;                    :family "MS ゴシック"
                     :height 105)
 
 ;;; フレームパラメータ初期値の設定
@@ -229,7 +229,6 @@
 (defun colorize-compilation-buffer ()
   (ansi-color-apply-on-region compilation-filter-start (point-max)))
 (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
-
 (use-package lsp-mode
   :ensure t
   :commands (lsp lsp-deferred)
@@ -295,12 +294,12 @@
 ;; csharp-mode
 (add-hook 'csharp-mode-hook #'lsp)
 
-;; custom settings
+;; custom-config.elというファイルがあれば読み込む
 (setq custom-config-file (locate-user-emacs-file "~/.emacs.d/custom-config.el"))
 (if (file-exists-p custom-config-file)
     (load custom-config-file))
 
-;; installed-packages-file
+;; インストールしたパッケージをinstalled-packages.elファイルに書き出す
 (setq custom-file (expand-file-name "installed-packages.el" user-emacs-directory))
 (when (file-exists-p custom-file)
   (load custom-file))
