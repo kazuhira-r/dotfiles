@@ -105,7 +105,7 @@
 (global-auto-revert-mode 1)
 
 (set-face-attribute 'default nil
-;;                    :family "MS ゴシック"
+                    :family "Cascadia Code"
                     :height 105)
 
 ;;; フレームパラメータ初期値の設定
