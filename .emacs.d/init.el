@@ -222,9 +222,8 @@
 ;;(use-package copilot-chat)
 
 ;; typescript
-(use-package typescript-mode)
-(add-hook 'typescript-mode-hook '(lambda () (setq typescript-indent-level 2)))
 (add-to-list 'auto-mode-alist '("\.[cm]?tsx?$" . typescript-mode))
+(add-hook 'typescript-mode-hook '(lambda () (setq typescript-indent-level 2)))
 (require 'ansi-color)
 (defun colorize-compilation-buffer ()
   (ansi-color-apply-on-region compilation-filter-start (point-max)))
@@ -288,7 +287,6 @@
 (yas-global-mode 1)
 
 ;; dockerfile-mode
-(use-package dockerfile-mode)
 (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
 
 ;; csharp-mode
