@@ -105,8 +105,8 @@
 (global-auto-revert-mode 1)
 
 (set-face-attribute 'default nil
-                    ;; :family "Cascadia Mono"
-                    :family "JetBrains Mono"
+                    :family "Cascadia Mono"
+                    ;; :family "JetBrains Mono"
                     :height 105)
 
 ;;; フレームパラメータ初期値の設定
