@@ -36,6 +36,7 @@
 ;; ファイル名を含む補完時に大文字・小文字を無視
 (setq completion-ignore-case t)
 (setq read-file-name-completion-ignore-case t)
+(setq read-buffer-completion-ignore-case t)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; [基本] 背景色・透過
