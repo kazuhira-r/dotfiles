@@ -3,7 +3,7 @@
 ;;
 
 ;; proxy.elというファイルがあれば読み込む
-(setq proxy-config-file (locate-user-emacs-file "~/.emacs.d/proxy.el"))
+(setq proxy-config-file (locate-user-emacs-file "proxy.el"))
 (if (file-exists-p proxy-config-file)
     (load proxy-config-file))
 
@@ -57,7 +57,7 @@
 ;;(add-to-list 'default-frame-alist '(alpha . (0.75 0.75)))
 
 ;; TABの表示幅(初期値8から4に変更)
-(setq default-tab-width 4)
+(setq-default tab-width 4)
 (setq tab-stop-list '(4 8 12 16 20 24 28 32 36 40 44 48 52 56 60 64 68 72
                         76 80 84 88 92 96 100 104 108 112 116 120 124 128
                         132 136 140 144
@@ -167,12 +167,15 @@
 (define-key global-map (kbd "C-c f") 'magit-file-dispatch)
 (setq magit-section-initial-visibility-alist '((untracked . show)))
 
+(use-package tree-sitter)
+(use-package tree-sitter-langs)
+
 ;; lsp-mode
 (use-package lsp-mode
+  :ensure t
   :init
-  ;; set prefix for lsp-command-keymap (few alternatives - "C-l", "C-c l")
   (setq lsp-keymap-prefix "C-c l")
-  :commands lsp)
+  :commands (lsp lsp-deferred))
 (setq gc-cons-threshold 100000000)
 (setq read-process-output-max (* 1024 1024))
 (setq lsp-completion-provider :capf)
@@ -200,10 +203,8 @@
 (add-hook 'after-init-hook 'global-company-mode)
 (with-eval-after-load 'company
   (setq company-idle-delay 0)
-  (setq company-auto-expand t)
   (setq company-minimum-prefix-length 1)
   (setq company-selection-wrap-around t)
-  (setq completion-ignore-case t)
   (global-set-key (kbd "C-c <insert>") 'company-complete)
   (define-key company-active-map (kbd "C-n") 'company-select-next)
   (define-key company-active-map (kbd "C-p") 'company-select-previous)
@@ -224,65 +225,40 @@
 ;;(use-package copilot-chat)
 
 ;; typescript
-(add-to-list 'auto-mode-alist '("\.[cm]?tsx?$" . typescript-mode))
-(add-hook 'typescript-mode-hook '(lambda () (setq typescript-indent-level 2)))
+(add-to-list 'auto-mode-alist '("\\.[cm]?tsx?$" . typescript-ts-mode))
+(add-hook 'typescript-ts-mode-hook
+          (lambda () (setq typescript-ts-mode-indent-offset 2)))
 (require 'ansi-color)
 (defun colorize-compilation-buffer ()
   (ansi-color-apply-on-region compilation-filter-start (point-max)))
 (add-hook 'compilation-filter-hook 'colorize-compilation-buffer)
-(use-package lsp-mode
-  :ensure t
-  :commands (lsp lsp-deferred)
-  :hook (typescript-mode . lsp-deferred))
+(add-hook 'typescript-ts-mode-hook #'lsp-deferred)
 
 ;; bash
-(add-to-list 'auto-mode-alist '("\.(ba)?sh$" . sh-mode))
+(add-to-list 'auto-mode-alist '("\\.\\(ba\\)?sh\\'" . bash-ts-mode))
 ;;; Bats
 ;;; typescript-modeのadd-to-listと競合するので、typescript-modeの定義よりも後ろに置く
-(add-to-list 'auto-mode-alist '("\.bats$" . sh-mode))
-(use-package lsp-mode
-  :ensure t
-  :commands (lsp lsp-deferred)
-  :hook (sh-mode . lsp-deferred))
+(add-to-list 'auto-mode-alist '("\\.bats$" . bash-ts-mode))
+(add-hook 'bash-ts-mode-hook #'lsp-deferred)
 
 ;; terraform
-(add-to-list 'auto-mode-alist '("\.tf$" . terraform-mode))
-(use-package lsp-mode
-  :ensure t
-  :commands (lsp lsp-deferred)
-  :hook (terraform-mode . lsp-deferred))
+(add-to-list 'auto-mode-alist '("\\.tf$" . terraform-mode))
+(add-hook 'terraform-mode-hook #'lsp-deferred)
 
 ;; go
-(use-package lsp-mode
-  :ensure t
-  :commands (lsp lsp-deferred)
-  :hook (go-mode . lsp-deferred))
+(add-hook 'go-ts-mode-hook #'lsp-deferred)
 
 ;; rust
-(use-package lsp-mode
-  :ensure t
-  :commands (lsp lsp-deferred)
-  :hook (rust-mode . lsp-deferred))
+(add-hook 'rust-ts-mode-hook #'lsp-deferred)
 
 ;; javascript
-(add-to-list 'auto-mode-alist '("\.[cm]?jsx?$" . js-mode))
-(add-hook 'js-mode-hook '(lambda () (setq js-indent-level 2)))
-(use-package lsp-mode
-  :ensure t
-  :commands (lsp lsp-deferred)
-  :hook (js-mode . lsp-deferred))
+(add-to-list 'auto-mode-alist '("\\.[cm]?jsx?$" . js-ts-mode))
+(add-hook 'js-ts-mode-hook (lambda () (setq js-indent-level 2)))
+(add-hook 'js-ts-mode-hook #'lsp-deferred)
 
 ;; python
-(use-package lsp-mode
-  :ensure t
-  :commands (lsp lsp-deferred)
-  :hook (python-mode . lsp-deferred))
+(add-hook 'python-ts-mode-hook #'lsp-deferred)
 
-;; groovy-mode
-(autoload 'groovy-mode "groovy-mode" "Groovy editing mode." t)
-(add-to-list 'auto-mode-alist '("\.groovy$" . groovy-mode))
-(add-to-list 'auto-mode-alist '("\.gradle$" . groovy-mode))
-(add-to-list 'interpreter-mode-alist '("groovy" . groovy-mode))
 
 ; yasnippet
 (use-package yasnippet)
@@ -295,7 +271,7 @@
 (add-hook 'csharp-mode-hook #'lsp)
 
 ;; custom-config.elというファイルがあれば読み込む
-(setq custom-config-file (locate-user-emacs-file "~/.emacs.d/custom-config.el"))
+(setq custom-config-file (locate-user-emacs-file "custom-config.el"))
 (if (file-exists-p custom-config-file)
     (load custom-config-file))
 
