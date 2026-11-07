@@ -1,5 +1,5 @@
 ;;
-;; init.el
+;; init.el:
 ;;
 
 ;; proxy.elというファイルがあれば読み込む
@@ -23,6 +23,10 @@
                                  "https://melpa.org/packages/") t)
 (add-to-list 'package-archives '("melpa-stable" .
                                  "https://stable.melpa.org/packages/"))
+(setq package-archive-priorities
+      '(("melpa" . 10)
+        ("melpa-stable" . 5)))
+
 (package-initialize)
 
 (when (not package-archive-contents)
@@ -236,6 +240,7 @@
         (php "https://github.com/tree-sitter/tree-sitter-php" nil "php/src")
         ;; (perl "https://github.com/tree-sitter-perl/tree-sitter-perl")
         (rust "https://github.com/tree-sitter/tree-sitter-rust")
+        (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
         (xml "https://github.com/tree-sitter-grammars/tree-sitter-xml" nil "xml/src")
         (dtd "https://github.com/tree-sitter-grammars/tree-sitter-xml" nil "dtd/src")
         (yaml "https://github.com/tree-sitter-grammars/tree-sitter-yaml")
@@ -326,9 +331,10 @@
 (yas-global-mode 1)
 
 ;; dockerfile-mode
-(add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
+(add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-ts-mode))
 
 ;; csharp-mode
+(add-to-list 'auto-mode-alist '("\\.cs\\'" . csharp-ts-mode))
 (add-hook 'csharp-ts-mode-hook #'lsp)
 
 ;; custom-config.elというファイルがあれば読み込む
