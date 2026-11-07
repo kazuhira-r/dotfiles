@@ -3,9 +3,9 @@
 ;;
 
 ;; proxy.elというファイルがあれば読み込む
-(setq proxy-config-file (locate-user-emacs-file "proxy.el"))
-(if (file-exists-p proxy-config-file)
-    (load proxy-config-file))
+(setq my/proxy-config-file (locate-user-emacs-file "proxy.el"))
+(if (file-exists-p my/proxy-config-file)
+    (load my/proxy-config-file))
 
 ;; 言語
 (set-language-environment 'Japanese)
@@ -232,6 +232,7 @@
         (python "https://github.com/tree-sitter/tree-sitter-python")
         (c "https://github.com/tree-sitter/tree-sitter-c")
         (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
+        (c-sharp "https://github.com/tree-sitter/tree-sitter-c-sharp")
         (php "https://github.com/tree-sitter/tree-sitter-php" nil "php/src")
         ;; (perl "https://github.com/tree-sitter-perl/tree-sitter-perl")
         (rust "https://github.com/tree-sitter/tree-sitter-rust")
@@ -275,7 +276,8 @@
   (message "treesit: update finished. Restart Emacs to apply."))
 
 ;; typescript
-(add-to-list 'auto-mode-alist '("\\.[cm]?tsx?$" . typescript-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.tsx\\'" . tsx-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.[cm]?ts\\'" . typescript-ts-mode))
 (add-hook 'typescript-ts-mode-hook
           (lambda () (setq typescript-ts-mode-indent-offset 2)))
 (require 'ansi-color)
@@ -318,14 +320,14 @@
 (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-mode))
 
 ;; csharp-mode
-(add-hook 'csharp-mode-hook #'lsp)
+(add-hook 'csharp-ts-mode-hook #'lsp)
 
 ;; custom-config.elというファイルがあれば読み込む
-(setq custom-config-file (locate-user-emacs-file "custom-config.el"))
-(if (file-exists-p custom-config-file)
-    (load custom-config-file))
+(setq my/custom-config-file (locate-user-emacs-file "custom-config.el"))
+(if (file-exists-p my/custom-config-file)
+    (load my/custom-config-file))
 
 ;; インストールしたパッケージをinstalled-packages.elファイルに書き出す
-(setq custom-file (expand-file-name "installed-packages.el" user-emacs-directory))
-(when (file-exists-p custom-file)
-  (load custom-file))
+(setq my/custom-file (expand-file-name "installed-packages.el" user-emacs-directory))
+(when (file-exists-p my/custom-file)
+  (load my/custom-file))
