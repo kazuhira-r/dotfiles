@@ -28,6 +28,9 @@
 (when (not package-archive-contents)
   (package-refresh-contents))
 
+(require 'use-package)
+(setq use-package-always-ensure t)
+
 ;; Paren settings
 (show-paren-mode t)
 ;; (electric-pair-mode t)
@@ -157,18 +160,17 @@
 (setq native-comp-async-report-warnings-errors nil)
 
 ;; Helm
-(require 'helm)
-(define-key global-map (kbd "C-x C-b") 'helm-for-files)
-(define-key global-map (kbd "M-y") 'helm-show-kill-ring)
+(use-package helm
+  :bind (("C-x C-b" . helm-for-files)
+         ("M-y" . helm-show-kill-ring)))
 
 ;; magit
-(define-key global-map (kbd "C-x g") 'magit-status)
-(define-key global-map (kbd "C-c g") 'magit-dispatch)
-(define-key global-map (kbd "C-c f") 'magit-file-dispatch)
-(setq magit-section-initial-visibility-alist '((untracked . show)))
-
-(use-package tree-sitter)
-(use-package tree-sitter-langs)
+(use-package magit
+  :bind (("C-x g" . magit-status)
+         ("C-c g" . magit-dispatch)
+         ("C-c f" . magit-file-dispatch))
+  :config
+  (setq magit-section-initial-visibility-alist '((untracked . show))))
 
 ;; lsp-mode
 (use-package lsp-mode
@@ -215,14 +217,62 @@
   :ensure t
   :init (global-flycheck-mode))
 
-;; GitHub Copilot
-;;(use-package copilot)
-;;(add-hook 'prog-mode-hook 'copilot-mode)
-;;(define-key copilot-completion-map (kbd "<tab>") 'copilot-accept-completion)
-;;(define-key copilot-completion-map (kbd "TAB") 'copilot-accept-completion)
+;; tree-sitterの構文定義
+(setq treesit-language-source-alist
+      '((java "https://github.com/tree-sitter/tree-sitter-java")
+        (bash "https://github.com/tree-sitter/tree-sitter-bash")
+        (hcl "https://github.com/tree-sitter-grammars/tree-sitter-hcl")
+        (terraform "https://github.com/tree-sitter-grammars/tree-sitter-hcl" nil "dialects/terraform/src")
+        (html "https://github.com/tree-sitter/tree-sitter-html")
+        (javascript "https://github.com/tree-sitter/tree-sitter-javascript")
+        (json "https://github.com/tree-sitter/tree-sitter-json")
+        (typescript "https://github.com/tree-sitter/tree-sitter-typescript" nil "typescript/src")
+        (tsx "https://github.com/tree-sitter/tree-sitter-typescript" nil "tsx/src")
+        (go "https://github.com/tree-sitter/tree-sitter-go")
+        (python "https://github.com/tree-sitter/tree-sitter-python")
+        (c "https://github.com/tree-sitter/tree-sitter-c")
+        (cpp "https://github.com/tree-sitter/tree-sitter-cpp")
+        (php "https://github.com/tree-sitter/tree-sitter-php" nil "php/src")
+        ;; (perl "https://github.com/tree-sitter-perl/tree-sitter-perl")
+        (rust "https://github.com/tree-sitter/tree-sitter-rust")
+        (xml "https://github.com/tree-sitter-grammars/tree-sitter-xml" nil "xml/src")
+        (dtd "https://github.com/tree-sitter-grammars/tree-sitter-xml" nil "dtd/src")
+        (toml "https://github.com/tree-sitter-grammars/tree-sitter-toml")
+        (make "https://github.com/alemuller/tree-sitter-make")
+        (markdown "https://github.com/tree-sitter-grammars/tree-sitter-markdown" nil "tree-sitter-markdown/src")
+        (markdown-inline "https://github.com/tree-sitter-grammars/tree-sitter-markdown" nil "tree-sitter-markdown-inline/src")))
 
-;; GitHub Copilot Chat
-;;(use-package copilot-chat)
+;; treesitがインストールされてない場合は自動でインストール
+;;(dolist (element treesit-language-source-alist)
+;;  (let ((lang (car element)))
+;;    (unless (treesit-language-available-p lang)
+;;      (message "treesit: installing %s" lang)
+;;      (condition-case err
+;;          (treesit-install-language-grammar lang)
+;;        (error (message "treesit: failed to install %s: %s" lang err))))))
+
+;; 一定期間でtree-sitterの構文定義を更新
+(defun my/treesit-grammar-outdated-p (lang &optional days)
+  ;; tree-sitterの文法ファイルが指定期間（日）より古ければ non-nil。"
+  (let ((file (locate-file (format "libtree-sitter-%s" lang)
+                           (list (expand-file-name "tree-sitter" user-emacs-directory))
+                           (list ".so" ".dylib" ".dll"))))
+    (or (null file)
+        (> (float-time (time-since (nth 5 (file-attributes file))))
+           (* (or days 7) 86400)))))
+
+(dolist (lang (mapcar #'car treesit-language-source-alist))
+  (when (my/treesit-grammar-outdated-p lang)
+    (condition-case err
+        (treesit-install-language-grammar lang)
+      (error (message "treesit: failed to install %s: %s" lang err)))))
+
+(defun update-treesit-all-grammars ()
+  "登録済みの全文法を再インストールして更新する。"
+  (interactive)
+  (dolist (lang (mapcar #'car treesit-language-source-alist))
+    (treesit-install-language-grammar lang))
+  (message "treesit: update finished. Restart Emacs to apply."))
 
 ;; typescript
 (add-to-list 'auto-mode-alist '("\\.[cm]?tsx?$" . typescript-ts-mode))
@@ -257,8 +307,8 @@
 (add-hook 'js-ts-mode-hook #'lsp-deferred)
 
 ;; python
+(add-to-list 'auto-mode-alist '("\\.py$" . python-ts-mode))
 (add-hook 'python-ts-mode-hook #'lsp-deferred)
-
 
 ; yasnippet
 (use-package yasnippet)
