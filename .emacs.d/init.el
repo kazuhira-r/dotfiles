@@ -267,7 +267,7 @@
         (treesit-install-language-grammar lang)
       (error (message "treesit: failed to install %s: %s" lang err)))))
 
-(defun update-treesit-all-grammars ()
+(defun my/update-treesit-all-grammars ()
   "登録済みの全文法を再インストールして更新する。"
   (interactive)
   (dolist (lang (mapcar #'car treesit-language-source-alist))
