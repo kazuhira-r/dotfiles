@@ -238,6 +238,7 @@
         (rust "https://github.com/tree-sitter/tree-sitter-rust")
         (xml "https://github.com/tree-sitter-grammars/tree-sitter-xml" nil "xml/src")
         (dtd "https://github.com/tree-sitter-grammars/tree-sitter-xml" nil "dtd/src")
+        (yaml "https://github.com/tree-sitter-grammars/tree-sitter-yaml")
         (toml "https://github.com/tree-sitter-grammars/tree-sitter-toml")
         (make "https://github.com/alemuller/tree-sitter-make")
         (markdown "https://github.com/tree-sitter-grammars/tree-sitter-markdown" nil "tree-sitter-markdown/src")
@@ -298,9 +299,11 @@
 (add-hook 'terraform-mode-hook #'lsp-deferred)
 
 ;; go
+(add-to-list 'auto-mode-alist '("\\.go\\'" . go-ts-mode))
 (add-hook 'go-ts-mode-hook #'lsp-deferred)
 
 ;; rust
+(add-to-list 'auto-mode-alist '("\\.rs\\'" . rust-ts-mode))
 (add-hook 'rust-ts-mode-hook #'lsp-deferred)
 
 ;; javascript
@@ -309,8 +312,14 @@
 (add-hook 'js-ts-mode-hook #'lsp-deferred)
 
 ;; python
-(add-to-list 'auto-mode-alist '("\\.py$" . python-ts-mode))
+(add-to-list 'auto-mode-alist '("\\.py\\'" . python-ts-mode))
 (add-hook 'python-ts-mode-hook #'lsp-deferred)
+
+;; toml
+(add-to-list 'auto-mode-alist '("\\.toml\\'" . toml-ts-mode))
+
+;; yaml
+(add-to-list 'auto-mode-alist '("\\.ya?ml\\'" . yaml-ts-mode))
 
 ; yasnippet
 (use-package yasnippet)
