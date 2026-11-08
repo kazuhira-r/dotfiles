@@ -240,6 +240,7 @@
         (php "https://github.com/tree-sitter/tree-sitter-php" nil "php/src")
         ;; (perl "https://github.com/tree-sitter-perl/tree-sitter-perl")
         (rust "https://github.com/tree-sitter/tree-sitter-rust")
+        (lua "https://github.com/MunifTanjim/tree-sitter-lua")
         (dockerfile "https://github.com/camdencheek/tree-sitter-dockerfile")
         (xml "https://github.com/tree-sitter-grammars/tree-sitter-xml" nil "xml/src")
         (dtd "https://github.com/tree-sitter-grammars/tree-sitter-xml" nil "dtd/src")
@@ -330,12 +331,14 @@
 (use-package yasnippet)
 (yas-global-mode 1)
 
-;; dockerfile-mode
+;; dockerfile
 (add-to-list 'auto-mode-alist '("Dockerfile\\'" . dockerfile-ts-mode))
 
-;; csharp-mode
+;; csharp
 (add-to-list 'auto-mode-alist '("\\.cs\\'" . csharp-ts-mode))
-(add-hook 'csharp-ts-mode-hook #'lsp)
+
+;; lua
+(add-to-list 'auto-mode-alist '("\\.lua\\'" . lua-ts-mode))
 
 ;; custom-config.elというファイルがあれば読み込む
 (setq my/custom-config-file (locate-user-emacs-file "custom-config.el"))
@@ -343,6 +346,6 @@
     (load my/custom-config-file))
 
 ;; インストールしたパッケージをinstalled-packages.elファイルに書き出す
-(setq my/custom-file (expand-file-name "installed-packages.el" user-emacs-directory))
-(when (file-exists-p my/custom-file)
-  (load my/custom-file))
+(setq custom-file (expand-file-name "installed-packages.el" user-emacs-directory))
+(when (file-exists-p custom-file)
+  (load custom-file))
