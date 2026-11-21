@@ -176,6 +176,15 @@
   :config
   (setq magit-section-initial-visibility-alist '((untracked . show))))
 
+;; perspective
+(use-package perspective
+  :bind
+  ("C-x C-b" . persp-list-buffers)
+  :custom
+  (persp-mode-prefix-key (kbd "C-c C-p"))
+  :init
+  (persp-mode))
+
 ;; treemacs
 (use-package treemacs
   :ensure t
@@ -195,6 +204,10 @@
 (use-package treemacs-magit
   :after (treemacs magit)
   :ensure t)
+
+(use-package treemacs-perspective
+  :after (treemacs perspective)
+  :config (treemacs-set-scope-type 'Perspectives))
 
 ;; lsp-mode
 (use-package lsp-mode
