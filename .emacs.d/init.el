@@ -165,7 +165,7 @@
 
 ;; Helm
 (use-package helm
-  :bind (("C-x C-b" . helm-for-files)
+  :bind (("C-x C-r" . helm-for-files)
          ("M-y" . helm-show-kill-ring)))
 
 ;; magit
