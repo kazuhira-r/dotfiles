@@ -181,7 +181,7 @@
   :bind
   ("C-x C-b" . persp-list-buffers)
   :custom
-  (persp-mode-prefix-key (kbd "C-c C-p"))
+  (persp-mode-prefix-key (kbd "C-c M-p"))
   :init
   (persp-mode))
 
