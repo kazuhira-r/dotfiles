@@ -182,10 +182,17 @@
   ("C-x C-b" . persp-list-buffers)
   :custom
   (persp-mode-prefix-key (kbd "C-c C-w"))
+  ;; 状態の保存
   (persp-state-default-file (locate-user-emacs-file "persp-state"))
   :init
-  (persp-mode))
-(add-hook 'kill-emacs-hook #'persp-state-save)
+  (persp-mode)
+  ;; 終了時に保存
+  (add-hook 'kill-emacs-hook #'persp-state-save)
+  ;; 起動後に復元
+  (add-hook 'emacs-startup-hook
+            (lambda ()
+              (when (file-exists-p persp-state-default-file)
+                (persp-state-load persp-state-default-file)))))
 
 ;; treemacs
 (use-package treemacs
