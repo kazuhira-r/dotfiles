@@ -181,9 +181,11 @@
   :bind
   ("C-x C-b" . persp-list-buffers)
   :custom
-  (persp-mode-prefix-key (kbd "C-c M-p"))
+  (persp-mode-prefix-key (kbd "C-c C-w"))
+  (persp-state-default-file (locate-user-emacs-file "persp-state"))
   :init
   (persp-mode))
+(add-hook 'kill-emacs-hook #'persp-state-save)
 
 ;; treemacs
 (use-package treemacs
